@@ -32,9 +32,7 @@ class InstagramCall {
   InstagramCall.fromJson(Map<String, dynamic> json) {
     final reg = RegExp(r'[^0-9]');
 
-    imageUrl = json['image_url'];
     textData = giveValid(json['text_data']);
-    id = json['id'];
     likes = giveValid(json['text_data'])['likes']
             .replaceAll(reg, '')
             .toString()
@@ -43,9 +41,8 @@ class InstagramCall {
         : int.parse(giveValid(json['text_data'])['likes']
             .replaceAll(reg, '')
             .toString());
-    imageUrl = json['image_url'] ?? '';
-    textData = giveValid(json['text_data'] ?? '');
-    id = json['id'] ?? '';
+    imageUrl = json['image_url'];
+    id = json['id'];
   }
 
   Map<String, dynamic> toJson() {
