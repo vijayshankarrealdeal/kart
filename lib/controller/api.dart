@@ -9,7 +9,11 @@ class API extends ChangeNotifier {
     _call();
   }
   List<InstagramCall> data = [];
-
+  List<String> buttonMenu = [
+    'Fashion',
+    'WomenFashion',
+    'MenFashion',
+  ];
   void _call() async {
     const url = 'http://127.0.0.1:8000/instagram';
     try {
@@ -18,6 +22,7 @@ class API extends ChangeNotifier {
           .decode(res.body)
           .map<InstagramCall>((e) => InstagramCall.fromJson(e))
           .toList();
+      notifyListeners();
     } catch (e) {
       print(e);
     }

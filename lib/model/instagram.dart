@@ -29,9 +29,9 @@ class InstagramCall {
   }
 
   InstagramCall.fromJson(Map<String, dynamic> json) {
-    imageUrl = json['image_url'];
-    textData = giveValid(json['text_data']);
-    id = json['id'];
+    imageUrl = json['image_url'] ?? '';
+    textData = giveValid(json['text_data'] ?? '');
+    id = json['id'] ?? '';
   }
 
   Map<String, dynamic> toJson() {

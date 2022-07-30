@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:kart/controller/api.dart';
 import 'package:kart/widget/text.dart';
 import 'package:provider/provider.dart';
@@ -13,16 +14,21 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    ThemeData _buildTheme(brightness) {
+      var baseTheme = ThemeData(brightness: brightness);
+
+      return baseTheme.copyWith(
+        textTheme: GoogleFonts.openSansTextTheme(baseTheme.textTheme),
+      );
+    }
+
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (ctx) => API()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          brightness: Brightness.dark,
-          primarySwatch: Colors.blue,
-        ),
+        theme: _buildTheme(Brightness.dark),
         home: const HomePage(),
       ),
     );
@@ -43,16 +49,16 @@ class HomePage extends StatelessWidget {
                 child: GradinentTextGive(
                   text: "Instagram",
                   colors: [
+                    Color(0xff515BD4),
                     Color(0xffF58529),
                     Color(0xffFEDA77),
                     Color(0xffDD2A7B),
                     Color(0xff8134AF),
-                    Color(0xff515BD4),
                   ],
                   fontSize: 100,
                 ),
               ),
-              const   SliverPadding(padding: EdgeInsets.all(20)),
+              const SliverPadding(padding: EdgeInsets.all(20)),
               SliverGrid(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,
