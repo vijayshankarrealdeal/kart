@@ -1,8 +1,9 @@
+import 'package:intl/intl.dart';
 import 'package:kart/widget/text.dart';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
-import 'package:kart/controller/api.dart';
+import 'package:kart/controller/instagram_api.dart';
 
 class InstagramDashboard extends StatelessWidget {
   const InstagramDashboard({
@@ -37,10 +38,13 @@ class InstagramDashboard extends StatelessWidget {
               ),
               delegate: SliverChildBuilderDelegate(
                 (context, index) {
+                  RegExp reg = RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))');
+                  String Function(Match) mathFunc =
+                      (Match match) => '${match[1]},';
                   String imageId =
                       'http://127.0.0.1:8000/files/${data.data[index].id}.jpg';
-                  String likes = data.data[index].textData['likes'];
-                  String like = likes.contains("Be the") ? "0 Likes" : likes;
+                  String like =
+                      NumberFormat.compact().format(data.data[index].likes);
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
@@ -80,7 +84,7 @@ class InstagramDashboard extends StatelessWidget {
                                     Text(
                                       like,
                                       style:
-                                          Theme.of(context).textTheme.headline3,
+                                          Theme.of(context).textTheme.headline4,
                                     ),
                                     const Icon(Icons.search, size: 50),
                                   ],

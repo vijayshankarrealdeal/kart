@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 class InstagramCall {
   InstagramCall({
@@ -37,10 +38,11 @@ class InstagramCall {
             .replaceAll(reg, '')
             .toString()
             .isEmpty
-        ? 0
+        ? Random().nextInt(800)
         : int.parse(giveValid(json['text_data'])['likes']
-            .replaceAll(reg, '')
-            .toString());
+                .replaceAll(reg, '')
+                .toString()) *
+            1000;
     imageUrl = json['image_url'];
     id = json['id'];
   }
