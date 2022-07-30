@@ -67,6 +67,8 @@ class HomePage extends StatelessWidget {
                 ),
                 delegate: SliverChildBuilderDelegate(
                   (context, index) {
+                    String imageId =
+                        'http://127.0.0.1:8000/files/${data.data[index].id}.jpg';
                     String likes = data.data[index].textData['likes'];
                     String like = likes.contains("Be the") ? "0 Likes" : likes;
                     return Padding(
@@ -77,7 +79,7 @@ class HomePage extends StatelessWidget {
                         decoration: BoxDecoration(
                           image: DecorationImage(
                               image: NetworkImage(
-                                data.data[index].imageUrl,
+                                imageId,
                               ),
                               fit: BoxFit.cover),
                           borderRadius: BorderRadius.circular(25),

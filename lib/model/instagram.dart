@@ -9,6 +9,7 @@ class InstagramCall {
   late final String imageUrl;
   late final Map<String, dynamic> textData;
   late final String id;
+  late final int likes;
 
   Map<String, dynamic> giveValid(String x) {
     String t = x.replaceAll('\'', '"');
@@ -29,6 +30,19 @@ class InstagramCall {
   }
 
   InstagramCall.fromJson(Map<String, dynamic> json) {
+    final reg = RegExp(r'[^0-9]');
+
+    imageUrl = json['image_url'];
+    textData = giveValid(json['text_data']);
+    id = json['id'];
+    likes = giveValid(json['text_data'])['likes']
+            .replaceAll(reg, '')
+            .toString()
+            .isEmpty
+        ? 0
+        : int.parse(giveValid(json['text_data'])['likes']
+            .replaceAll(reg, '')
+            .toString());
     imageUrl = json['image_url'] ?? '';
     textData = giveValid(json['text_data'] ?? '');
     id = json['id'] ?? '';

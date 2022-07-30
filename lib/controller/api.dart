@@ -22,6 +22,7 @@ class API extends ChangeNotifier {
           .decode(res.body)
           .map<InstagramCall>((e) => InstagramCall.fromJson(e))
           .toList();
+      data.sort((a, b) => b.likes.compareTo(a.likes));
       notifyListeners();
     } catch (e) {
       print(e);
