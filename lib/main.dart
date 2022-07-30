@@ -86,23 +86,13 @@ class HomePage extends StatelessWidget {
                           ),
                           onPressed: () => menu.change(MenuItems.instagram),
                         ),
-                        const SizedBox(width: 10),
-                        CupertinoButton(
-                          padding: EdgeInsets.zero,
-                          child: Text(
-                            "Flipkart",
-                            style: Theme.of(context)
-                                .textTheme
-                                .button!
-                                .copyWith(color: Colors.white),
-                          ),
-                          onPressed: () => menu.change(MenuItems.flipkart),
-                        ),
                       ],
                     ),
-                    const Padding(
+                    Padding(
                       padding: const EdgeInsets.only(right: 10.0),
-                      child: CupertinoActivityIndicator(),
+                      child: menu.load
+                          ? const CupertinoActivityIndicator()
+                          : const SizedBox.shrink(),
                     ),
                   ]),
             ),
