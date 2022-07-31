@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kart/app/instagram_dashboard.dart';
 import 'package:kart/controller/instagram_api.dart';
-import 'package:kart/controller/search_api.dart';
 import 'package:kart/controller/switch_menu.dart';
 import 'package:kart/widget/text.dart';
 import 'package:provider/provider.dart';
@@ -30,7 +29,6 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (ctx) => SwitchMenu()),
         ChangeNotifierProvider(create: (ctx) => API()),
-        ChangeNotifierProvider(create: (ctx) => SearchApi()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -52,7 +50,7 @@ class HomePage extends StatelessWidget {
           children: [
             Container(
               width: double.infinity,
-              height: MediaQuery.of(context).size.height * 0.07,
+              height: MediaQuery.of(context).size.height * 0.075,
               decoration: const BoxDecoration(
                 color: CupertinoColors.black,
               ),
@@ -60,33 +58,19 @@ class HomePage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Row(
-                      children: [
-                        const SizedBox(width: 10),
-                        CupertinoButton(
-                          padding: EdgeInsets.zero,
-                          child: Text(
-                            "Search Trends",
-                            style: Theme.of(context)
-                                .textTheme
-                                .button!
-                                .copyWith(color: Colors.white),
-                          ),
-                          onPressed: () => menu.change(MenuItems.searchTrends),
-                        ),
-                        const SizedBox(width: 10),
-                        CupertinoButton(
-                          padding: EdgeInsets.zero,
-                          child: Text(
-                            "Instagram",
-                            style: Theme.of(context)
-                                .textTheme
-                                .button!
-                                .copyWith(color: Colors.white),
-                          ),
-                          onPressed: () => menu.change(MenuItems.instagram),
-                        ),
-                      ],
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      child: GradinentTextGive(
+                        text: "trends+",
+                        colors: const [
+                          Color(0xff515BD4),
+                          // Color(0xffF58529),
+                          // Color(0xffFEDA77),
+                          Color(0xffDD2A7B),
+                          Color(0xff8134AF),
+                        ],
+                        fontSize: MediaQuery.of(context).size.height * 0.06,
+                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(right: 10.0),
@@ -96,7 +80,7 @@ class HomePage extends StatelessWidget {
                     ),
                   ]),
             ),
-            Expanded(child: menu.changedisplay()),
+            const Expanded(child: InstagramDashboard()),
           ],
         );
       }),

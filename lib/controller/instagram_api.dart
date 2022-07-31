@@ -25,7 +25,7 @@ class API extends ChangeNotifier {
       data.sort((a, b) => b.likes.compareTo(a.likes));
       notifyListeners();
     } catch (e) {
-      print(e);
+      //
     }
   }
 }

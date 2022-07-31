@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class GradientText extends StatelessWidget {
   // ignore: use_key_in_widget_constructors
@@ -28,18 +29,21 @@ class GradinentTextGive extends StatelessWidget {
   final String text;
   final List<Color> colors;
   final double fontSize;
-  const GradinentTextGive(
-      {Key? key, this.fontSize = 50, required this.text, required this.colors})
-      : super(key: key);
+  const GradinentTextGive({
+    Key? key,
+    this.fontSize = 50,
+    required this.text,
+    required this.colors,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GradientText(
       text,
-      style: Theme.of(context)
-          .textTheme
-          .headline2!
-          .copyWith(fontWeight: FontWeight.bold, fontSize: fontSize),
+      style: Theme.of(context).textTheme.displayLarge!.copyWith(
+            fontSize: fontSize,
+            fontFamily: GoogleFonts.squarePeg().fontFamily,
+          ),
       gradient: LinearGradient(
           colors: colors, begin: Alignment.bottomRight, end: Alignment.topLeft),
     );

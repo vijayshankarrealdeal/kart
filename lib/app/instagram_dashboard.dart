@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:kart/controller/switch_menu.dart';
-import 'package:kart/widget/text.dart';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
@@ -18,20 +17,66 @@ class InstagramDashboard extends StatelessWidget {
       builder: (context, data, meu, _) {
         return CustomScrollView(
           slivers: [
-            const SliverToBoxAdapter(
-              child: GradinentTextGive(
-                text: "Instagram",
-                colors: [
-                  Color(0xff515BD4),
-                  Color(0xffF58529),
-                  Color(0xffFEDA77),
-                  Color(0xffDD2A7B),
-                  Color(0xff8134AF),
-                ],
-                fontSize: 100,
+            const SliverPadding(
+              padding: EdgeInsets.all(8.0),
+              sliver: SliverToBoxAdapter(
+                child: CupertinoTheme(
+                    data: CupertinoThemeData(brightness: Brightness.dark),
+                    child: CupertinoSearchTextField()),
               ),
             ),
-            const SliverPadding(padding: EdgeInsets.all(20)),
+            SliverPadding(
+              padding: const EdgeInsets.all(8.0),
+              sliver: SliverToBoxAdapter(
+                child: CupertinoTheme(
+                  data: const CupertinoThemeData(brightness: Brightness.dark),
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 1200),
+                    height: meu.expand
+                        ? MediaQuery.of(context).size.height * 0.5
+                        : MediaQuery.of(context).size.height * 0.2,
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: GridView(
+                            physics: const NeverScrollableScrollPhysics(),
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              childAspectRatio: 4 / 3,
+                              mainAxisExtent: 45,
+                              crossAxisCount: 7,
+                            ),
+                            children: meu.data
+                                .map(
+                                  (e) => Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 3.0),
+                                    child: Chip(
+                                      label: Text(e.itemName),
+                                    ),
+                                  ),
+                                )
+                                .toList(),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: CupertinoButton(
+                              padding: EdgeInsets.zero,
+                              child: Text(!meu.expand ? "more" : "less"),
+                              onPressed: () => meu.changeX(),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            const SliverPadding(padding: EdgeInsets.all(5)),
             SliverGrid(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3,
@@ -279,6 +324,22 @@ class InstagramDashboard extends StatelessWidget {
                                                     style: Theme.of(context)
                                                         .textTheme
                                                         .bodyText1,
+                                                  ),
+                                                  CupertinoButton(
+                                                    padding: EdgeInsets.zero,
+                                                    onPressed: () {
+                                                      menu.launchUr(
+                                                        Uri.parse(menu
+                                                            .searchData[index]
+                                                            .link),
+                                                      );
+                                                    },
+                                                    child: Text(
+                                                      "More Details",
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .caption,
+                                                    ),
                                                   ),
                                                 ],
                                               ),

@@ -1,20 +1,49 @@
 import 'dart:convert';
-
+import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:kart/app/instagram_dashboard.dart';
-import 'package:kart/app/search_trends.dart';
 import 'package:http/http.dart' as http;
 import 'package:kart/model/search_model.dart';
-
-enum MenuItems { searchTrends, instagram }
+import 'package:kart/model/top_model.dart';
 
 class SwitchMenu extends ChangeNotifier {
-  MenuItems items = MenuItems.searchTrends;
+  SwitchMenu() {
+    _call();
+  }
+  Future<void> launchUr(Uri url) async {
+    if (!await launchUrl(url)) {
+      throw 'Could not launch $url';
+    }
+  }
+
+  bool expand = false;
+  void changeX() {
+    if (expand == false) {
+      expand = true;
+    } else {
+      expand = false;
+    }
+    expand != expand;
+    notifyListeners();
+  }
+
+  List<TopTrendings> data = [];
+  void _call() async {
+    const url = 'http://127.0.0.1:8000/trends';
+    try {
+      final res = await http.get(Uri.parse(url));
+      data = json
+          .decode(res.body)
+          .map<TopTrendings>((e) => TopTrendings.fromJson(e))
+          .toList();
+      data.sort((a, b) => b.famous.compareTo(a.famous));
+      notifyListeners();
+    } catch (e) {
+      //
+    }
+  }
 
   List<SearchModelFlipkart> searchData = [];
   bool load = false;
-  bool firstPage = false;
-  bool lastPage = false;
   int page = 0;
   void pageC(int x) {
     page = x;
@@ -40,21 +69,9 @@ class SwitchMenu extends ChangeNotifier {
       load = false;
       notifyListeners();
     } catch (e) {
-      print(e);
+      //
       load = false;
       notifyListeners();
     }
-  }
-
-  void change(item) {
-    items = item;
-    notifyListeners();
-  }
-
-  Widget changedisplay() {
-    if (items == MenuItems.instagram) {
-      return const InstagramDashboard();
-    }
-    return const SearchTrends();
   }
 }
